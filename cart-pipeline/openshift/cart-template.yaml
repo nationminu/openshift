@@ -26,6 +26,7 @@ objects:
         kind: ImageStreamTag
         name: cart:latest
     source:
+      contextDir: ${GIT_CONTEXT}
       git:
         ref: ${GIT_REF}
         uri: ${GIT_URI}
@@ -155,7 +156,12 @@ parameters:
   displayName: Git source repository
   name: GIT_URI
   required: true
-  value: https://github.com/siamaksade/cart-service.git
+  value: https://github.com/nationminu/openshift.git
+- description: Git Context for application
+  displayName: Git Context repository
+  name: GIT_CONTEXT
+  required: true
+  value: cart-service
 - description: Git branch/tag reference
   displayName: Git branch/tag reference
   name: GIT_REF

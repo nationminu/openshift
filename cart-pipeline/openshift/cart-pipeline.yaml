@@ -10,9 +10,10 @@ items:
     name: cart-service-pipeline
   spec:
     source:
+      contextDir: cart-pipeline
       git:
-        ref: pipeline
-        uri: https://github.com/siamaksade/cart-service.git
+        ref: master
+        uri: https://github.com/nationminu/openshift
       type: Git
     strategy:
       type: JenkinsPipeline
