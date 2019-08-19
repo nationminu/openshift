@@ -9,16 +9,16 @@ node('maven') {
   stage('Test') {
     parallel(
       "Cart Tests": {
-        sh "mvn verify -P cart-tests"
+        sh "cd cart-service;mvn verify -P cart-tests"
       },
       "Discount Tests": {
-        sh "mvn verify -P discount-tests"
+        sh "cd cart-service;mvn verify -P discount-tests"
       }
     )
   }
   stage('Build Image') {
     unstash name:"jar"
-    sh "oc start-build cart --from-file=target/cart.jar --follow"
+    sh "oc start-build cart --from-file=cart-service/target/cart.jar --follow"
   }
   stage('Deploy') {
     openshiftDeploy depCfg: 'cart'
