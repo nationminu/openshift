@@ -1,6 +1,7 @@
 node('maven') {
   stage('Build') {
     git url: "https://github.com/nationminu/openshift.git"
+    sh "pwd"
     sh "cd cart-service"
     sh "mvn package"
     stash name:"jar", includes:"target/cart.jar"
