@@ -17,7 +17,7 @@ node('maven') {
     )
   }
   stage('Build Image') {
-    unstash name:"cd cart-service;jar"
+//    unstash name:"cd cart-service;jar"
     sh "oc start-build cart --from-file=cart-service/target/cart.jar --follow"
   }
   stage('Deploy') {
