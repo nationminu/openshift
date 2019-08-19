@@ -1,23 +1,21 @@
 node('maven') {
   stage('Build') {
-    git url: "https://github.com/nationminu/openshift.git"
-    sh "pwd;ls"
-    sh "cd cart-service;pwd ls"
-    sh "cd cart-service;mvn package"
+    git url: "https://github.com/nationminu/openshift.git", context: "cart-service"
+    sh "mvn package"
     stash name:"jar", includes:"target/cart.jar"
   }
   stage('Test') {
     parallel(
       "Cart Tests": {
-        sh "cd cart-service;mvn verify -P cart-tests"
+        sh "mvn verify -P cart-tests"
       },
       "Discount Tests": {
-        sh "cd cart-service;mvn verify -P discount-tests"
+        sh "mvn verify -P discount-tests"
       }
     )
   }
   stage('Build Image') {
-//    unstash name:"cd cart-service;jar"
+    unstash name:"cd cart-service;jar"
     sh "oc start-build cart --from-file=cart-service/target/cart.jar --follow"
   }
   stage('Deploy') {
